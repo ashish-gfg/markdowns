@@ -1,0 +1,1154 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "f5150e6b"
+      },
+      "source": [
+        "# Task\n",
+        "Generate a minimalistic Jupyter Notebook on Python Decorator Functions, focusing on core concepts and practical application, suitable for a maximum 10-minute read."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "982d2822"
+      },
+      "source": [
+        "## Introduction\n",
+        "\n",
+        "### Subtask:\n",
+        "Briefly define decorators and their main purpose (adding functionality to functions without modifying them). Keep it very short.\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "05df099d"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell to define Python decorators and their purpose.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 107
+        },
+        "id": "059bb687",
+        "outputId": "9c45f068-9167-41ea-a584-10d2c192c517"
+      },
+      "source": [
+        "%%markdown\n",
+        "## Python Decorator Functions\n",
+        "\n",
+        "Python decorators are a powerful way to modify or enhance functions without changing their source code. They allow you to wrap another function in order to extend the behavior of the wrapped function."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "## Python Decorator Functions\n\nPython decorators are a powerful way to modify or enhance functions without changing their source code. They allow you to wrap another function in order to extend the behavior of the wrapped function.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "2097f826"
+      },
+      "source": [
+        "## Core concept: functions as first-class objects\n",
+        "\n",
+        "### Subtask:\n",
+        "Briefly explain that functions can be passed around like variables, which is key to decorators. Provide one very simple code example.\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "abf1e20c"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell to explain that functions can be treated like variables in Python, which is crucial for understanding decorators.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 164
+        },
+        "id": "5694362f",
+        "outputId": "ee6db4bc-a34c-4695-8816-0d78c3c2740a"
+      },
+      "source": [
+        "%%markdown\n",
+        "### Functions as First-Class Objects\n",
+        "\n",
+        "In Python, functions are first-class objects. This means they can be treated like any other variable:\n",
+        "*   Assigned to variables.\n",
+        "*   Passed as arguments to other functions.\n",
+        "*   Returned as values from other functions.\n",
+        "\n",
+        "This property is fundamental to how decorators work."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "### Functions as First-Class Objects\n\nIn Python, functions are first-class objects. This means they can be treated like any other variable:\n*   Assigned to variables.\n*   Passed as arguments to other functions.\n*   Returned as values from other functions.\n\nThis property is fundamental to how decorators work.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "be6cd203"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Define a simple function, assign it to a new variable, and call it using the new variable to demonstrate that functions can be treated like variables.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "5d483979",
+        "outputId": "e5615409-9612-4e63-a8a5-d3c33ef2aeb8"
+      },
+      "source": [
+        "def greet(name):\n",
+        "  return f\"Hello, {name}!\"\n",
+        "\n",
+        "# Assign the function to a new variable\n",
+        "say_hello = greet\n",
+        "\n",
+        "# Call the function using the new variable\n",
+        "print(say_hello(\"World\"))"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Hello, World!\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "70c1fe81"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell to explain the simple example, reinforcing the concept of functions as first-class objects and how they can be assigned and called via different variable names.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 64
+        },
+        "id": "f0ba8b0d",
+        "outputId": "c9c17da9-9186-4b5d-8b10-cb848a1ad4d8"
+      },
+      "source": [
+        "%%markdown\n",
+        "This simple example demonstrates how the `greet` function was assigned to the variable `say_hello`, and we were able to call the original function through this new variable name. This illustrates the first-class nature of functions in Python."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "This simple example demonstrates how the `greet` function was assigned to the variable `say_hello`, and we were able to call the original function through this new variable name. This illustrates the first-class nature of functions in Python.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "cc63d632"
+      },
+      "source": [
+        "## Basic decorator structure\n",
+        "\n",
+        "### Subtask:\n",
+        "Show the basic structure of a decorator (outer function wrapping an inner function that calls the original function). Provide a minimal code example.\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "4cd15444"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell to explain the basic structure of a decorator.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 174
+        },
+        "id": "312d4683",
+        "outputId": "20019d32-40b1-4e1f-fbaa-a90b494d7b3c"
+      },
+      "source": [
+        "%%markdown\n",
+        "### Basic Decorator Structure\n",
+        "\n",
+        "A decorator is essentially a function that takes another function as input, adds some functionality, and returns a new function (often called a wrapper function). The basic structure involves:\n",
+        "\n",
+        "1.  An **outer function** (the decorator) that accepts a function as an argument.\n",
+        "2.  An **inner function** (the wrapper) defined inside the outer function. This inner function is where the additional logic is placed, and it calls the original function.\n",
+        "3.  The outer function **returns** the inner function."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "### Basic Decorator Structure\n\nA decorator is essentially a function that takes another function as input, adds some functionality, and returns a new function (often called a wrapper function). The basic structure involves:\n\n1.  An **outer function** (the decorator) that accepts a function as an argument.\n2.  An **inner function** (the wrapper) defined inside the outer function. This inner function is where the additional logic is placed, and it calls the original function.\n3.  The outer function **returns** the inner function.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "9d1191e0"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a code cell with a minimal example demonstrating the basic decorator structure.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "389f35b6",
+        "outputId": "8d33b17a-e31d-48df-8955-2e25dc6b5b1a"
+      },
+      "source": [
+        "def simple_decorator(func):\n",
+        "    def wrapper():\n",
+        "        print(\"Something is happening before the function is called.\")\n",
+        "        func()\n",
+        "        print(\"Something is happening after the function is called.\")\n",
+        "    return wrapper\n",
+        "\n",
+        "def say_hello():\n",
+        "    print(\"Hello!\")\n",
+        "\n",
+        "# Manually apply the decorator\n",
+        "decorated_say_hello = simple_decorator(say_hello)\n",
+        "\n",
+        "# Call the decorated function\n",
+        "decorated_say_hello()"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Something is happening before the function is called.\n",
+            "Hello!\n",
+            "Something is happening after the function is called.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "b593599d"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell to explain the code example, clarifying how the outer function wraps the inner function and how the inner function executes the original function.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 195
+        },
+        "id": "7dc805fe",
+        "outputId": "e016c2d2-27e6-462d-cda3-b336e76f7bbd"
+      },
+      "source": [
+        "%%markdown\n",
+        "In the example above:\n",
+        "\n",
+        "- `simple_decorator` is the **outer function**. It takes `func` (which is `say_hello` in this case) as an argument.\n",
+        "- `wrapper` is the **inner function**. It contains the code that runs *before* (`print(\"Something is happening before...\")`) and *after* (`print(\"Something is happening after...\")`) the original function `func()` is called.\n",
+        "- `simple_decorator` returns the `wrapper` function.\n",
+        "- When we manually apply the decorator with `decorated_say_hello = simple_decorator(say_hello)`, `decorated_say_hello` becomes the `wrapper` function.\n",
+        "- Calling `decorated_say_hello()` actually executes the `wrapper` function, which in turn calls the original `say_hello()` function between the extra print statements."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "In the example above:\n\n- `simple_decorator` is the **outer function**. It takes `func` (which is `say_hello` in this case) as an argument.\n- `wrapper` is the **inner function**. It contains the code that runs *before* (`print(\"Something is happening before...\")`) and *after* (`print(\"Something is happening after...\")`) the original function `func()` is called.\n- `simple_decorator` returns the `wrapper` function.\n- When we manually apply the decorator with `decorated_say_hello = simple_decorator(say_hello)`, `decorated_say_hello` becomes the `wrapper` function.\n- Calling `decorated_say_hello()` actually executes the `wrapper` function, which in turn calls the original `say_hello()` function between the extra print statements.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "3d254430"
+      },
+      "source": [
+        "## The `@` syntax\n",
+        "\n",
+        "### Subtask:\n",
+        "Introduce the `@` syntax as a shortcut for applying decorators. Show a simple example using `@`.\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "5f183372"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell to explain the `@` syntax for applying decorators.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 119
+        },
+        "id": "4e302cdf",
+        "outputId": "52995a46-2b2e-401e-98eb-9d47b7ca72d8"
+      },
+      "source": [
+        "%%markdown\n",
+        "### Using the `@` Syntax\n",
+        "\n",
+        "Python provides a more convenient and readable way to apply decorators using the `@` syntax. This is just syntactic sugar for the manual application we saw earlier (`decorated_function = decorator(original_function)`). Placing `@decorator_name` directly above a function definition is equivalent to manually applying the decorator to that function."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "### Using the `@` Syntax\n\nPython provides a more convenient and readable way to apply decorators using the `@` syntax. This is just syntactic sugar for the manual application we saw earlier (`decorated_function = decorator(original_function)`). Placing `@decorator_name` directly above a function definition is equivalent to manually applying the decorator to that function.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "73ea7fdb"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Provide a code cell demonstrating the previous decorator example (`simple_decorator`) applied to the `say_hello` function using the `@` syntax.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "9578630b",
+        "outputId": "d353287b-1a65-4a7c-df6d-9720a50bfa24"
+      },
+      "source": [
+        "def simple_decorator(func):\n",
+        "    def wrapper():\n",
+        "        print(\"Something is happening before the function is called.\")\n",
+        "        func()\n",
+        "        print(\"Something is happening after the function is called.\")\n",
+        "    return wrapper\n",
+        "\n",
+        "@simple_decorator\n",
+        "def say_hello_decorated():\n",
+        "    print(\"Hello again!\")\n",
+        "\n",
+        "# Call the decorated function directly\n",
+        "say_hello_decorated()"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Something is happening before the function is called.\n",
+            "Hello again!\n",
+            "Something is happening after the function is called.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "b672df78"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell explaining how the `@` syntax simplifies the application of the decorator.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 65
+        },
+        "id": "eddc9ee9",
+        "outputId": "feeffb5b-bccc-48dc-bf10-2b6e081e1840"
+      },
+      "source": [
+        "%%markdown\n",
+        "As you can see, using the `@simple_decorator` syntax above the `say_hello_decorated` function definition achieves the same result as manually writing `say_hello_decorated = simple_decorator(say_hello_decorated)`. This syntax is cleaner and more intuitive for applying decorators."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "As you can see, using the `@simple_decorator` syntax above the `say_hello_decorated` function definition achieves the same result as manually writing `say_hello_decorated = simple_decorator(say_hello_decorated)`. This syntax is cleaner and more intuitive for applying decorators.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "0e521742"
+      },
+      "source": [
+        "## Decorator with arguments and return values\n",
+        "\n",
+        "### Subtask:\n",
+        "Briefly explain how to handle arguments and return values when using decorators. Provide a simple code example that demonstrates both.\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "364cf410"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell to explain how to handle arguments and return values in decorators.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 193
+        },
+        "id": "560af62d",
+        "outputId": "8528631d-ad3c-4574-851b-55817291d98e"
+      },
+      "source": [
+        "%%markdown\n",
+        "### Handling Arguments and Return Values\n",
+        "\n",
+        "The basic decorator structure shown so far works only for functions that take no arguments and return no value. To create decorators that can work with any function, regardless of its signature (the number and types of arguments) or whether it returns a value, the `wrapper` function needs to be more flexible.\n",
+        "\n",
+        "1.  **Handling Arguments:** The wrapper function should accept arbitrary positional and keyword arguments using `*args` and `**kwargs`. These are then passed directly to the original function.\n",
+        "2.  **Handling Return Values:** The wrapper function should capture the return value of the original function call and return it. This ensures that the decorated function behaves as expected in expressions or assignments that rely on its return value."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "### Handling Arguments and Return Values\n\nThe basic decorator structure shown so far works only for functions that take no arguments and return no value. To create decorators that can work with any function, regardless of its signature (the number and types of arguments) or whether it returns a value, the `wrapper` function needs to be more flexible.\n\n1.  **Handling Arguments:** The wrapper function should accept arbitrary positional and keyword arguments using `*args` and `**kwargs`. These are then passed directly to the original function.\n2.  **Handling Return Values:** The wrapper function should capture the return value of the original function call and return it. This ensures that the decorated function behaves as expected in expressions or assignments that rely on its return value.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "d63f7c68"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a code cell with a decorator that handles arguments and return values, a function to be decorated, and a demonstration of calling the decorated function and printing its return value.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "dc1072a3",
+        "outputId": "ce168907-2a76-4b9d-87b3-136d6ab0fbda"
+      },
+      "source": [
+        "def flexible_decorator(func):\n",
+        "    def wrapper(*args, **kwargs):\n",
+        "        print(f\"Calling function: {func.__name__} with args: {args} and kwargs: {kwargs}\")\n",
+        "        # Call the original function with its arguments and capture the return value\n",
+        "        result = func(*args, **kwargs)\n",
+        "        print(f\"Function {func.__name__} returned: {result}\")\n",
+        "        # Return the result of the original function call\n",
+        "        return result\n",
+        "    return wrapper\n",
+        "\n",
+        "@flexible_decorator\n",
+        "def add_numbers(a, b):\n",
+        "    \"\"\"Adds two numbers.\"\"\"\n",
+        "    return a + b\n",
+        "\n",
+        "@flexible_decorator\n",
+        "def concatenate_strings(s1, s2, separator=\" \"):\n",
+        "    \"\"\"Concatenates two strings with an optional separator.\"\"\"\n",
+        "    return s1 + separator + s2\n",
+        "\n",
+        "# Demonstrate with add_numbers\n",
+        "sum_result = add_numbers(5, 3)\n",
+        "print(f\"Result of add_numbers: {sum_result}\")\n",
+        "\n",
+        "# Demonstrate with concatenate_strings\n",
+        "concat_result = concatenate_strings(\"Hello\", \"World\", separator=\", \")\n",
+        "print(f\"Result of concatenate_strings: {concat_result}\")\n",
+        "\n",
+        "concat_result_default = concatenate_strings(\"Hello\", \"World\")\n",
+        "print(f\"Result of concatenate_strings (default separator): {concat_result_default}\")"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Calling function: add_numbers with args: (5, 3) and kwargs: {}\n",
+            "Function add_numbers returned: 8\n",
+            "Result of add_numbers: 8\n",
+            "Calling function: concatenate_strings with args: ('Hello', 'World') and kwargs: {'separator': ', '}\n",
+            "Function concatenate_strings returned: Hello, World\n",
+            "Result of concatenate_strings: Hello, World\n",
+            "Calling function: concatenate_strings with args: ('Hello', 'World') and kwargs: {}\n",
+            "Function concatenate_strings returned: Hello World\n",
+            "Result of concatenate_strings (default separator): Hello World\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "1e61397b"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell to explain the code example, focusing on how `*args` and `**kwargs` handle arguments and how returning the result preserves the return value.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 265
+        },
+        "id": "a6d747fe",
+        "outputId": "14c2f65b-4676-4eac-b3e2-944932da171f"
+      },
+      "source": [
+        "%%markdown\n",
+        "This code example demonstrates a `flexible_decorator` that can wrap functions accepting any arguments and returning any value.\n",
+        "\n",
+        "- The `wrapper` function inside `flexible_decorator` accepts `*args` and `**kwargs`.\n",
+        "    - `*args` collects any positional arguments passed to the decorated function into a tuple.\n",
+        "    - `**kwargs` collects any keyword arguments into a dictionary.\n",
+        "- Inside the `wrapper`, `func(*args, **kwargs)` calls the original function, passing along all the received positional and keyword arguments. This ensures the original function receives its expected inputs correctly, regardless of its specific signature.\n",
+        "- The result of `func(*args, **kwargs)` is stored in the `result` variable.\n",
+        "- Finally, `wrapper` returns this `result`. This is crucial because it means the decorated function `add_numbers` or `concatenate_strings` still returns the value calculated by the original function, allowing you to use the decorated function's output just like the original function's output (e.g., assigning it to `sum_result` or `concat_result`).\n",
+        "\n",
+        "The output clearly shows the decorator intercepting the function calls, printing the arguments and return values, and the final printed results match the return values from the decorated functions, confirming that argument handling and return value preservation work as intended."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "This code example demonstrates a `flexible_decorator` that can wrap functions accepting any arguments and returning any value.\n\n- The `wrapper` function inside `flexible_decorator` accepts `*args` and `**kwargs`.\n    - `*args` collects any positional arguments passed to the decorated function into a tuple.\n    - `**kwargs` collects any keyword arguments into a dictionary.\n- Inside the `wrapper`, `func(*args, **kwargs)` calls the original function, passing along all the received positional and keyword arguments. This ensures the original function receives its expected inputs correctly, regardless of its specific signature.\n- The result of `func(*args, **kwargs)` is stored in the `result` variable.\n- Finally, `wrapper` returns this `result`. This is crucial because it means the decorated function `add_numbers` or `concatenate_strings` still returns the value calculated by the original function, allowing you to use the decorated function's output just like the original function's output (e.g., assigning it to `sum_result` or `concat_result`).\n\nThe output clearly shows the decorator intercepting the function calls, printing the arguments and return values, and the final printed results match the return values from the decorated functions, confirming that argument handling and return value preservation work as intended.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "766551d8"
+      },
+      "source": [
+        "## Preserving metadata (`functools.wraps`)\n",
+        "\n",
+        "### Subtask:\n",
+        "Briefly explain the issue of losing function metadata and how `functools.wraps` solves it. Show a concise example.\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "65175bda"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell explaining the issue of losing function metadata and how `functools.wraps` solves it.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 177
+        },
+        "id": "a03d3b83",
+        "outputId": "d68e0701-4dec-41a0-8f57-91c58433c052"
+      },
+      "source": [
+        "%%markdown\n",
+        "### Preserving Metadata with `functools.wraps`\n",
+        "\n",
+        "When you use a decorator, the original function is replaced by the wrapper function returned by the decorator. This process can lead to the loss of important metadata from the original function, such as its name (`__name__`), docstring (`__doc__`), module (`__module__`), and dictionary (`__dict__`). Debugging and introspection can become difficult because the decorated function appears to be the wrapper function.\n",
+        "\n",
+        "The `functools` module provides the `@functools.wraps(original_function)` decorator specifically to address this issue. When applied to the wrapper function inside your decorator, `@wraps` copies the relevant metadata from the original function (`original_function`) to the wrapper function. This makes the decorated function look and behave more like the original function, preserving its identity and documentation."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "### Preserving Metadata with `functools.wraps`\n\nWhen you use a decorator, the original function is replaced by the wrapper function returned by the decorator. This process can lead to the loss of important metadata from the original function, such as its name (`__name__`), docstring (`__doc__`), module (`__module__`), and dictionary (`__dict__`). Debugging and introspection can become difficult because the decorated function appears to be the wrapper function.\n\nThe `functools` module provides the `@functools.wraps(original_function)` decorator specifically to address this issue. When applied to the wrapper function inside your decorator, `@wraps` copies the relevant metadata from the original function (`original_function`) to the wrapper function. This makes the decorated function look and behave more like the original function, preserving its identity and documentation.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "405c70b5"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a code cell demonstrating the metadata loss without `functools.wraps` and its preservation with `functools.wraps`.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "f1f7cc55",
+        "outputId": "766f95ba-17d2-4bf1-b12e-8a5460da5a19"
+      },
+      "source": [
+        "import functools\n",
+        "\n",
+        "# 1. Define a simple function with metadata\n",
+        "def my_function():\n",
+        "    \"\"\"This is the docstring for my_function.\"\"\"\n",
+        "    print(\"Executing my_function\")\n",
+        "\n",
+        "print(\"Original function metadata:\")\n",
+        "print(f\"Name: {my_function.__name__}\")\n",
+        "print(f\"Docstring: {my_function.__doc__}\")\n",
+        "\n",
+        "# 2. Define a basic decorator *without* functools.wraps\n",
+        "def basic_decorator_without_wraps(func):\n",
+        "    def wrapper_without_wraps():\n",
+        "        \"\"\"This is the wrapper docstring.\"\"\"\n",
+        "        print(\"Something is happening before.\")\n",
+        "        func()\n",
+        "        print(\"Something is happening after.\")\n",
+        "    return wrapper_without_wraps\n",
+        "\n",
+        "# 3. Apply the basic decorator\n",
+        "@basic_decorator_without_wraps\n",
+        "def decorated_function_without_wraps():\n",
+        "    \"\"\"This is the docstring for decorated_function_without_wraps.\"\"\"\n",
+        "    print(\"Executing decorated_function_without_wraps\")\n",
+        "\n",
+        "print(\"\\nDecorated function metadata (without wraps):\")\n",
+        "print(f\"Name: {decorated_function_without_wraps.__name__}\")\n",
+        "print(f\"Docstring: {decorated_function_without_wraps.__doc__}\")\n",
+        "\n",
+        "# 4. Define the same decorator *with* functools.wraps\n",
+        "def basic_decorator_with_wraps(func):\n",
+        "    @functools.wraps(func) # Apply functools.wraps here\n",
+        "    def wrapper_with_wraps(*args, **kwargs): # Use *args, **kwargs for flexibility\n",
+        "        \"\"\"This is the wrapper docstring (will be overwritten).\"\"\"\n",
+        "        print(\"Something else is happening before.\")\n",
+        "        result = func(*args, **kwargs)\n",
+        "        print(\"Something else is happening after.\")\n",
+        "        return result # Return the result\n",
+        "\n",
+        "    return wrapper_with_wraps\n",
+        "\n",
+        "# 5. Apply the new decorator\n",
+        "@basic_decorator_with_wraps\n",
+        "def decorated_function_with_wraps():\n",
+        "    \"\"\"This is the docstring for decorated_function_with_wraps.\"\"\"\n",
+        "    print(\"Executing decorated_function_with_wraps\")\n",
+        "\n",
+        "print(\"\\nDecorated function metadata (with wraps):\")\n",
+        "print(f\"Name: {decorated_function_with_wraps.__name__}\")\n",
+        "print(f\"Docstring: {decorated_function_with_wraps.__doc__}\")\n",
+        "\n",
+        "# Execute the decorated functions to show they work\n",
+        "print(\"\\nExecuting decorated functions:\")\n",
+        "decorated_function_without_wraps()\n",
+        "decorated_function_with_wraps()"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Original function metadata:\n",
+            "Name: my_function\n",
+            "Docstring: This is the docstring for my_function.\n",
+            "\n",
+            "Decorated function metadata (without wraps):\n",
+            "Name: wrapper_without_wraps\n",
+            "Docstring: This is the wrapper docstring.\n",
+            "\n",
+            "Decorated function metadata (with wraps):\n",
+            "Name: decorated_function_with_wraps\n",
+            "Docstring: This is the docstring for decorated_function_with_wraps.\n",
+            "\n",
+            "Executing decorated functions:\n",
+            "Something is happening before.\n",
+            "Executing decorated_function_without_wraps\n",
+            "Something is happening after.\n",
+            "Something else is happening before.\n",
+            "Executing decorated_function_with_wraps\n",
+            "Something else is happening after.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "8d2d7437"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell explaining the output of the code example, highlighting the difference in metadata before and after using `functools.wraps`.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 307
+        },
+        "id": "7d3effe9",
+        "outputId": "c1e73485-b8fe-4d32-f4cb-01105d995e15"
+      },
+      "source": [
+        "%%markdown\n",
+        "### Explanation of the Metadata Example\n",
+        "\n",
+        "The code example clearly demonstrates the issue of metadata loss and how `functools.wraps` solves it:\n",
+        "\n",
+        "1.  **Original Function Metadata:** The `my_function` initially shows its correct `__name__` ('my_function') and `__doc__` ('This is the docstring for my_function.').\n",
+        "2.  **Metadata Loss (without wraps):** When `decorated_function_without_wraps` is decorated *without* `functools.wraps`, its `__name__` becomes 'wrapper_without_wraps' and its `__doc__` becomes the docstring of the wrapper function ('This is the wrapper docstring.'). The original function's metadata is lost. This can make debugging harder as stack traces will show the wrapper function's name instead of the original function's name, and accessing the docstring via `help()` or `.__doc__` will give information about the wrapper, not the decorated function.\n",
+        "3.  **Metadata Preservation (with wraps):** When `decorated_function_with_wraps` is decorated *with* `@functools.wraps(func)` applied to the `wrapper_with_wraps` function, its `__name__` correctly remains 'decorated_function_with_wraps' and its `__doc__` is copied from the original function's docstring ('This is the docstring for decorated_function_with_wraps.'). `functools.wraps` effectively copies the relevant metadata from the original function (`func` in this case) onto the wrapper function, preserving the identity of the decorated function.\n",
+        "\n",
+        "This shows that using `functools.wraps` is essential for creating well-behaved decorators that maintain the introspection capabilities of the original functions, leading to more understandable and maintainable code."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "### Explanation of the Metadata Example\n\nThe code example clearly demonstrates the issue of metadata loss and how `functools.wraps` solves it:\n\n1.  **Original Function Metadata:** The `my_function` initially shows its correct `__name__` ('my_function') and `__doc__` ('This is the docstring for my_function.').\n2.  **Metadata Loss (without wraps):** When `decorated_function_without_wraps` is decorated *without* `functools.wraps`, its `__name__` becomes 'wrapper_without_wraps' and its `__doc__` becomes the docstring of the wrapper function ('This is the wrapper docstring.'). The original function's metadata is lost. This can make debugging harder as stack traces will show the wrapper function's name instead of the original function's name, and accessing the docstring via `help()` or `.__doc__` will give information about the wrapper, not the decorated function.\n3.  **Metadata Preservation (with wraps):** When `decorated_function_with_wraps` is decorated *with* `@functools.wraps(func)` applied to the `wrapper_with_wraps` function, its `__name__` correctly remains 'decorated_function_with_wraps' and its `__doc__` is copied from the original function's docstring ('This is the docstring for decorated_function_with_wraps.'). `functools.wraps` effectively copies the relevant metadata from the original function (`func` in this case) onto the wrapper function, preserving the identity of the decorated function.\n\nThis shows that using `functools.wraps` is essential for creating well-behaved decorators that maintain the introspection capabilities of the original functions, leading to more understandable and maintainable code.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "ca20196c"
+      },
+      "source": [
+        "## Simple use case example (e.g., logging or timing)\n",
+        "\n",
+        "### Subtask:\n",
+        "Choose one straightforward use case (like simple logging or timing) and provide a minimal code example to illustrate practical application.\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "c210feb4"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell to explain a simple, practical use case for decorators, specifically timing function execution.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 118
+        },
+        "id": "3c8702ab",
+        "outputId": "f56535dd-1c89-4e25-ea44-6f7f2265e74c"
+      },
+      "source": [
+        "%%markdown\n",
+        "### Practical Application: Timing Function Execution\n",
+        "\n",
+        "A very common and practical use case for decorators is to measure how long a function takes to execute. This can be useful for performance monitoring, debugging, or understanding the efficiency of different parts of your code. We can create a decorator that wraps any function, records the time before and after its execution, and then prints the duration. This adds timing functionality without needing to manually add timing code to every function you want to measure."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "### Practical Application: Timing Function Execution\n\nA very common and practical use case for decorators is to measure how long a function takes to execute. This can be useful for performance monitoring, debugging, or understanding the efficiency of different parts of your code. We can create a decorator that wraps any function, records the time before and after its execution, and then prints the duration. This adds timing functionality without needing to manually add timing code to every function you want to measure.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "6eaa99b1"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Create a code cell with a decorator function that measures execution time, handles arguments and return values, uses `functools.wraps`, includes necessary imports, defines a simple function to be decorated, applies the decorator using `@`, and calls the decorated function.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "cabf5032",
+        "outputId": "15b07787-5b3e-4510-f4d3-e7ad1da48dc4"
+      },
+      "source": [
+        "import time\n",
+        "import functools\n",
+        "\n",
+        "def timing_decorator(func):\n",
+        "    \"\"\"Decorator that measures the execution time of a function.\"\"\"\n",
+        "    @functools.wraps(func) # Preserve original function's metadata\n",
+        "    def wrapper_timer(*args, **kwargs):\n",
+        "        start_time = time.time()    # 1. Record start time\n",
+        "        result = func(*args, **kwargs) # 2. Execute the original function\n",
+        "        end_time = time.time()      # 3. Record end time\n",
+        "        run_time = end_time - start_time # 4. Calculate execution time\n",
+        "        print(f\"Function {func.__name__!r} took {run_time:.4f} seconds\")\n",
+        "        return result # 5. Return the result of the original function\n",
+        "    return wrapper_timer\n",
+        "\n",
+        "# Define a simple function that takes arguments and returns a value\n",
+        "@timing_decorator\n",
+        "def complex_operation(duration, multiplier):\n",
+        "    \"\"\"Simulates a complex operation by sleeping and then multiplying.\"\"\"\n",
+        "    time.sleep(duration)\n",
+        "    return duration * multiplier\n",
+        "\n",
+        "# Call the decorated function multiple times\n",
+        "complex_result = complex_operation(2, 4)\n",
+        "print(f\"Complex operation result: {complex_result}\")\n",
+        "\n",
+        "complex_result_default = complex_operation(1, 5)\n",
+        "print(f\"Complex operation result (default): {complex_result_default}\")\n",
+        "\n",
+        "multiply_result = complex_operation(0.5, 40)\n",
+        "print(f\"Complex operation result (multiply): {multiply_result}\")\n",
+        "\n",
+        "sum_result = complex_operation(0.8, 10)\n",
+        "print(f\"Complex operation result (sum): {sum_result}\")"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Function 'complex_operation' took 2.0001 seconds\n",
+            "Complex operation result: 8\n",
+            "Function 'complex_operation' took 1.0002 seconds\n",
+            "Complex operation result (default): 5\n",
+            "Function 'complex_operation' took 0.5002 seconds\n",
+            "Complex operation result (multiply): 20.0\n",
+            "Function 'complex_operation' took 0.8001 seconds\n",
+            "Complex operation result (sum): 8.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "5269bf06"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Add a markdown cell explaining the code example and its output, highlighting how the decorator adds timing functionality without modifying the original function.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 517
+        },
+        "id": "6b5fe85c",
+        "outputId": "bc28f391-ab32-47b1-dbcd-958745ace7b3"
+      },
+      "source": [
+        "%%markdown\n",
+        "### Explaining the Timing Decorator Example\n",
+        "\n",
+        "This example demonstrates how the `timing_decorator` adds execution time measurement to the `complex_operation` function without altering the `complex_operation`'s code itself.\n",
+        "\n",
+        "- We import `time` for measuring time and `functools` for `@functools.wraps`.\n",
+        "- The `timing_decorator` is defined. It takes a function `func` as input.\n",
+        "- Inside the decorator, `wrapper_timer` is defined. This is the function that will actually be called when `complex_operation` is executed.\n",
+        "    - `@functools.wraps(func)` is applied to `wrapper_timer`. This is crucial because it copies the name (`complex_operation`) and docstring (`Simulates a complex operation...`) from the original `complex_operation` function to the `wrapper_timer`. This makes debugging and introspection easier, as shown in the previous section.\n",
+        "    - `wrapper_timer` accepts `*args` and `**kwargs`, allowing it to receive any positional and keyword arguments passed to `complex_operation`.\n",
+        "    - `time.time()` records the start time.\n",
+        "    - `result = func(*args, **kwargs)` calls the original `complex_operation` function with the received arguments. The `time.sleep()` inside `complex_operation` simulates work, making the timing noticeable. The return value of `complex_operation` is captured in the `result` variable.\n",
+        "    - `time.time()` records the end time after the original function finishes.\n",
+        "    - The difference between end time and start time is calculated as `run_time`.\n",
+        "    - A print statement shows the name of the function and its execution time.\n",
+        "    - `wrapper_timer` returns the `result` captured from the original function call. This ensures that when you call `complex_operation(2, 4)`, you still get `8` back, just like you would without the decorator.\n",
+        "- The `@timing_decorator` syntax above `complex_operation` applies the decorator. This is equivalent to writing `complex_operation = timing_decorator(complex_operation)`.\n",
+        "- When `complex_operation(2, 4)` is called, it's actually `wrapper_timer(2, 4)` that executes. The wrapper performs the timing, calls the original `complex_operation(2, 4)`, gets `8` back, prints the timing information, and then returns `8`.\n",
+        "\n",
+        "The output shows that for each call to `complex_operation`, the decorator first prints the execution time (corresponding roughly to the `duration` argument due to `time.sleep`) before the result of the multiplication is printed. This clearly illustrates how the decorator added the timing functionality transparently to the user of the `complex_operation` function."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "### Explaining the Timing Decorator Example\n\nThis example demonstrates how the `timing_decorator` adds execution time measurement to the `complex_operation` function without altering the `complex_operation`'s code itself.\n\n- We import `time` for measuring time and `functools` for `@functools.wraps`.\n- The `timing_decorator` is defined. It takes a function `func` as input.\n- Inside the decorator, `wrapper_timer` is defined. This is the function that will actually be called when `complex_operation` is executed.\n    - `@functools.wraps(func)` is applied to `wrapper_timer`. This is crucial because it copies the name (`complex_operation`) and docstring (`Simulates a complex operation...`) from the original `complex_operation` function to the `wrapper_timer`. This makes debugging and introspection easier, as shown in the previous section.\n    - `wrapper_timer` accepts `*args` and `**kwargs`, allowing it to receive any positional and keyword arguments passed to `complex_operation`.\n    - `time.time()` records the start time.\n    - `result = func(*args, **kwargs)` calls the original `complex_operation` function with the received arguments. The `time.sleep()` inside `complex_operation` simulates work, making the timing noticeable. The return value of `complex_operation` is captured in the `result` variable.\n    - `time.time()` records the end time after the original function finishes.\n    - The difference between end time and start time is calculated as `run_time`.\n    - A print statement shows the name of the function and its execution time.\n    - `wrapper_timer` returns the `result` captured from the original function call. This ensures that when you call `complex_operation(2, 4)`, you still get `8` back, just like you would without the decorator.\n- The `@timing_decorator` syntax above `complex_operation` applies the decorator. This is equivalent to writing `complex_operation = timing_decorator(complex_operation)`.\n- When `complex_operation(2, 4)` is called, it's actually `wrapper_timer(2, 4)` that executes. The wrapper performs the timing, calls the original `complex_operation(2, 4)`, gets `8` back, prints the timing information, and then returns `8`.\n\nThe output shows that for each call to `complex_operation`, the decorator first prints the execution time (corresponding roughly to the `duration` argument due to `time.sleep`) before the result of the multiplication is printed. This clearly illustrates how the decorator added the timing functionality transparently to the user of the `complex_operation` function.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "c8dc3d79"
+      },
+      "source": [
+        "## Summary\n",
+        "\n",
+        "### Subtask:\n",
+        "Provide a very brief summary of what decorators are and their utility.\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "c6ef0ffd"
+      },
+      "source": [
+        "**Reasoning**:\n",
+        "Create a markdown cell to provide a very brief summary of decorators and their utility, adhering to the specified length constraint.\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 107
+        },
+        "id": "f6f60469",
+        "outputId": "0e377873-0742-4de5-cdac-28f02c70c024"
+      },
+      "source": [
+        "%%markdown\n",
+        "## What are Decorators and Why Use Them?\n",
+        "\n",
+        "Decorators in Python are a syntactic sugar that allows you to wrap functions or methods with additional behavior. They provide a clean and reusable way to extend or modify the functionality of existing functions without directly changing their source code, promoting separation of concerns."
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Markdown object>"
+            ],
+            "text/markdown": "## What are Decorators and Why Use Them?\n\nDecorators in Python are a syntactic sugar that allows you to wrap functions or methods with additional behavior. They provide a clean and reusable way to extend or modify the functionality of existing functions without directly changing their source code, promoting separation of concerns.\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "5c78b83e"
+      },
+      "source": [
+        "## Summary:\n",
+        "\n",
+        "### Data Analysis Key Findings\n",
+        "\n",
+        "*   The process successfully created a minimalistic Jupyter Notebook explaining Python decorators.\n",
+        "*   Key concepts covered include: functions as first-class objects, basic decorator structure, the `@` syntax for application, handling arguments and return values, preserving metadata using `functools.wraps`, and a practical timing decorator example.\n",
+        "*   Each section included a brief explanation using markdown, a code example demonstrating the concept, and an explanation of the code and its output.\n",
+        "*   The code examples successfully ran and produced the expected outputs, confirming the concepts were correctly implemented.\n",
+        "*   The final notebook concludes with a brief summary of decorators and their utility.\n",
+        "\n",
+        "### Insights or Next Steps\n",
+        "\n",
+        "*   The generated notebook serves as a solid, quick introduction to Python decorators, suitable for the target audience and time constraint.\n",
+        "*   Consider adding a brief section on decorator chaining as a potential next step for a slightly more advanced topic while still maintaining conciseness.\n"
+      ]
+    }
+  ]
+}

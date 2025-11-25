@@ -1,0 +1,539 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "5debbe28"
+      },
+      "source": [
+        "# Magic Methods with Operators (Minimalist Guide)\n",
+        "\n",
+        "This notebook provides a quick overview of Python's magic methods (dunder methods) and how they enable operator overloading.\n",
+        "\n",
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "983bf4be"
+      },
+      "source": [
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "fd1f4ce9"
+      },
+      "source": [
+        "## Key Comparison Operators\n",
+        "\n",
+        "Some key magic methods for comparison operations:\n",
+        "\n",
+        "*   `__eq__(self, other)`: Defines behavior for `==`.\n",
+        "*   `__lt__(self, other)`: Defines behavior for `<`.\n",
+        "*   `__gt__(self, other)`: Defines behavior for `>`.\n",
+        "\n",
+        "Example:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "a255db59",
+        "outputId": "ebdf1d4b-3c87-493a-c952-f9c4ff6722fe"
+      },
+      "source": [
+        "class Number:\n",
+        "    def __init__(self, value):\n",
+        "        self.value = value\n",
+        "\n",
+        "    # Define equality for Number objects\n",
+        "    def __eq__(self, other):\n",
+        "        return self.value == other.value\n",
+        "\n",
+        "    # Define less than for Number objects\n",
+        "    def __lt__(self, other):\n",
+        "        return self.value < other.value\n",
+        "\n",
+        "n1 = Number(10)\n",
+        "n2 = Number(20)\n",
+        "n3 = Number(10)\n",
+        "\n",
+        "print(n1 == n3)\n",
+        "print(n1 < n2)"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "True\n",
+            "True\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "d7287610"
+      },
+      "source": [
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "b1b1dfc9"
+      },
+      "source": [
+        "## Unary Operators\n",
+        "\n",
+        "An example of a unary operator magic method:\n",
+        "\n",
+        "*   `__neg__(self)`: Defines behavior for the unary `-` operator.\n",
+        "\n",
+        "Example:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "3dfc87d5",
+        "outputId": "571f6abb-644d-4788-eadd-7d4d0d4ecaf5"
+      },
+      "source": [
+        "class MyNumber:\n",
+        "    def __init__(self, value):\n",
+        "        self.value = value\n",
+        "\n",
+        "    # Define the negative of MyNumber\n",
+        "    def __neg__(self):\n",
+        "        return MyNumber(-self.value)\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return str(self.value)\n",
+        "\n",
+        "num = MyNumber(5)\n",
+        "neg_num = -num\n",
+        "print(neg_num)"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "-5\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "be39bb7c"
+      },
+      "source": [
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "76ea3fb2"
+      },
+      "source": [
+        "## Augmented Assignment\n",
+        "\n",
+        "Example for augmented assignment:\n",
+        "\n",
+        "*   `__iadd__(self, other)`: Defines behavior for `+=`.\n",
+        "\n",
+        "Example:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "6e480fad",
+        "outputId": "71b270de-d271-4de9-c351-5db06e1ae7a2"
+      },
+      "source": [
+        "class Counter:\n",
+        "    def __init__(self, count):\n",
+        "        self.count = count\n",
+        "\n",
+        "    # Define in-place addition\n",
+        "    def __iadd__(self, other):\n",
+        "        self.count += other\n",
+        "        return self # Return self for chaining\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return str(self.count)\n",
+        "\n",
+        "c = Counter(10)\n",
+        "c += 5\n",
+        "print(c)"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "15\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "565ee1ee"
+      },
+      "source": [
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "f2ecd7d3"
+      },
+      "source": [
+        "## Summary\n",
+        "\n",
+        "Magic methods provide a powerful way to customize the behavior of your objects with operators, making your classes more intuitive and integrated with Python's built-in features.\n",
+        "\n",
+        "For more detailed information, refer to the Python documentation on data model."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "8c62717c"
+      },
+      "source": [
+        "## What are Magic Methods?\n",
+        "\n",
+        "Magic methods are special methods in Python with double underscores at the beginning and end (e.g., `__init__`, `__add__`). They allow you to define how objects of your classes behave with built-in Python operations and functions.\n",
+        "\n",
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "93edb67e"
+      },
+      "source": [
+        "## Operator Overloading\n",
+        "\n",
+        "By implementing specific magic methods in your classes, you can make instances of your class work with standard Python operators like `+`, `-`, `*`, `<`, `>`, `==`, etc.\n",
+        "\n",
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "0755bec4"
+      },
+      "source": [
+        "## Common Arithmetic Operators\n",
+        "\n",
+        "Here are some commonly used magic methods for arithmetic operations:\n",
+        "\n",
+        "*   `__add__(self, other)`: Defines behavior for the `+` operator.\n",
+        "*   `__sub__(self, other)`: Defines behavior for the `-` operator.\n",
+        "*   `__mul__(self, other)`: Defines behavior for the `*` operator.\n",
+        "*   `__truediv__(self, other)`: Defines behavior for the `/` operator.\n",
+        "\n",
+        "Let's see a quick example:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "6f4c817d",
+        "outputId": "8fa89f77-309a-42eb-e9dc-190c8af5a8e9"
+      },
+      "source": [
+        "class Vector:\n",
+        "    \"\"\"Represents a 2D vector.\"\"\"\n",
+        "    def __init__(self, x, y):\n",
+        "        self.x = x\n",
+        "        self.y = y\n",
+        "\n",
+        "    # Define addition for Vector objects\n",
+        "    def __add__(self, other):\n",
+        "        return Vector(self.x + other.x, self.y + other.y)\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return f\"Vector({self.x}, {self.y})\"\n",
+        "\n",
+        "v1 = Vector(2, 3)\n",
+        "v2 = Vector(5, 7)\n",
+        "\n",
+        "# Using the + operator with Vector objects\n",
+        "v3 = v1 + v2\n",
+        "print(v3)"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Vector(7, 10)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "36204823"
+      },
+      "source": [
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "cf5e99d1"
+      },
+      "source": [
+        "## Key Comparison Operators\n",
+        "\n",
+        "Some key magic methods for comparison operations:\n",
+        "\n",
+        "*   `__eq__(self, other)`: Defines behavior for `==`.\n",
+        "*   `__lt__(self, other)`: Defines behavior for `<`.\n",
+        "*   `__gt__(self, other)`: Defines behavior for `>`.\n",
+        "\n",
+        "Example:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "5db36bcc",
+        "outputId": "ab796702-1012-4ebb-9677-3c94eb8fe23d"
+      },
+      "source": [
+        "class Number:\n",
+        "    \"\"\"Represents a simple number.\"\"\"\n",
+        "    def __init__(self, value):\n",
+        "        self.value = value\n",
+        "\n",
+        "    # Define equality for Number objects\n",
+        "    def __eq__(self, other):\n",
+        "        return self.value == other.value\n",
+        "\n",
+        "    # Define less than for Number objects\n",
+        "    def __lt__(self, other):\n",
+        "        return self.value < other.value\n",
+        "\n",
+        "n1 = Number(10)\n",
+        "n2 = Number(20)\n",
+        "n3 = Number(10)\n",
+        "\n",
+        "print(n1 == n3)\n",
+        "print(n1 < n2)"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "True\n",
+            "True\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "4e7e491c"
+      },
+      "source": [
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "e70492af"
+      },
+      "source": [
+        "## Unary Operators\n",
+        "\n",
+        "An example of a unary operator magic method:\n",
+        "\n",
+        "*   `__neg__(self)`: Defines behavior for the unary `-` operator.\n",
+        "\n",
+        "Example:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "da766ea0",
+        "outputId": "45047b45-02b5-4e50-e209-714d18e6dbe2"
+      },
+      "source": [
+        "class MyNumber:\n",
+        "    \"\"\"Represents a number with unary negation.\"\"\"\n",
+        "    def __init__(self, value):\n",
+        "        self.value = value\n",
+        "\n",
+        "    # Define the negative of MyNumber\n",
+        "    def __neg__(self):\n",
+        "        return MyNumber(-self.value)\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return str(self.value)\n",
+        "\n",
+        "num = MyNumber(5)\n",
+        "neg_num = -num\n",
+        "print(neg_num)"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "-5\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "b627b73c"
+      },
+      "source": [
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "0cc1a87b"
+      },
+      "source": [
+        "## Augmented Assignment\n",
+        "\n",
+        "Example for augmented assignment:\n",
+        "\n",
+        "*   `__iadd__(self, other)`: Defines behavior for `+=`.\n",
+        "\n",
+        "Example:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "9702c0a0",
+        "outputId": "21a82942-1e78-4db3-a620-f0a19e0edf36"
+      },
+      "source": [
+        "class Counter:\n",
+        "    \"\"\"Represents a counter with augmented assignment.\"\"\"\n",
+        "    def __init__(self, count):\n",
+        "        self.count = count\n",
+        "\n",
+        "    # Define in-place addition\n",
+        "    def __iadd__(self, other):\n",
+        "        self.count += other\n",
+        "        return self # Return self for chaining\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return str(self.count)\n",
+        "\n",
+        "c = Counter(10)\n",
+        "c += 5\n",
+        "print(c)"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "15\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "3190db15"
+      },
+      "source": [
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "b88d0548"
+      },
+      "source": [
+        "## Summary\n",
+        "\n",
+        "Magic methods provide a powerful way to customize the behavior of your objects with operators, making your classes more intuitive and integrated with Python's built-in features.\n",
+        "\n",
+        "For more detailed information, refer to the Python documentation on data model."
+      ]
+    }
+  ]
+}
